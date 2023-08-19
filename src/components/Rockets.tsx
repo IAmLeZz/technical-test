@@ -1,12 +1,13 @@
 import React from 'react';
+import './Rockets.css'
 
 const Rockets = ({ rockets }: { rockets: Rocket[] }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-[100%] md:w-[95%] m-auto">
       {rockets.map((rocket) => (
         <div
           key={rocket.id}
-          className="bg-dark border border-gray-300 rounded-lg p-6 shadow-md"
+          className="bg-dark border-2 border-gray-100 rounded-lg p-6 rocket-box"
         >
           <h3 className="text-xl font-semibold mb-2">{rocket.name}</h3>
           <p className="text-gray-500 mb-2">
