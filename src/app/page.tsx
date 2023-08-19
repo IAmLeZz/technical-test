@@ -11,12 +11,8 @@ import PayloadsChart from '@/components/PayloadsChart'
 
 
 export default function Home() {
-  const { data, getSpaceXData } = useSpaceXData({endpoint: 'v4/rockets'})
-  return (
-    <main>
-      <h1 className='text-[60px] text-center font-bold'>SPACEX APP</h1>
-      <h3 className='text-[30px] text-center font-bold'>Our Rockets</h3>
-      <Rockets rockets={data} />
-    </main>
-  )
-}
+  const { data: rockets, getSpaceXData: getRockets } = useSpaceXData({ endpoint: 'v4/rockets' })
+  const { data: history, getSpaceXData: getHistory } = useSpaceXData({ endpoint: 'v4/history' })
+  const { data: company, getSpaceXData: getCompany } = useSpaceXData({ endpoint: 'v4/company' })
+  const { data: launches, getSpaceXData: getLaunches } = useSpaceXData({ endpoint: 'v5/launches' })
+  const { data: payloads, getSpaceXData: getPayloads } = useSpaceXData({endpoint: 'v4/payloads'})
