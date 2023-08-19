@@ -1,0 +1,5 @@
+.rocket-box{
+    box-shadow: 2px 1px 18px 0px rgba(255,255,255,0.75);
+    -webkit-box-shadow: 2px 1px 18px 0px rgba(255,255,255,0.75);
+    -moz-box-shadow: 2px 1px 18px 0px rgba(255,255,255,0.75);
+}
