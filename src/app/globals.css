@@ -16,6 +16,15 @@
   }
 }
 
+@font-face {
+  font-family: SpaceX;
+  src: url('../../public/fonts/SpaceX.ttf');
+}
+
+.company-text{
+  font-family: SpaceX, sans-serif;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
