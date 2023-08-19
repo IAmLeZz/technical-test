@@ -1,7 +1,13 @@
 "use client"
 import Rockets from '@/components/Rockets'
 import useSpaceXData from '@/hooks/useSpaceXData'
-import Image from 'next/image'
+import History from '@/components/History'
+import ParticlesBG from '@/components/ParticlesBG'
+import Company from '@/components/Company'
+import { useEffect, useState } from 'react'
+import EmployeesChart from '@/components/PayloadsChart'
+import LaunchesChart from '@/components/LaunchesChart'
+import PayloadsChart from '@/components/PayloadsChart'
 
 
 export default function Home() {
