@@ -5,7 +5,7 @@ import React, { useState, useCallback, useRef, useEffect } from 'react'
 export default function useSpaceXData({ endpoint, params }: { endpoint: string, params?: string | undefined }) {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
+    const [error, setError] = useState<string | null>(null)
     const previousParams = useRef(params);
 
     const getSpaceXData = useCallback(
@@ -37,6 +37,6 @@ export default function useSpaceXData({ endpoint, params }: { endpoint: string, 
     }, [getSpaceXData, params]);
 
     return {
-        data, getSpaceXData, loading
+        data, getSpaceXData, loading, error
     }
 }
