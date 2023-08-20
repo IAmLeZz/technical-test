@@ -115,14 +115,14 @@ interface Headquarters {
   address: string;
   city: string;
   state: string;
-};
+}
 
 interface Links {
   website: string;
   flickr: string;
   twitter: string;
   elon_twitter: string;
-};
+}
 
 interface SpaceXInfo {
   headquarters: Headquarters;
@@ -141,7 +141,7 @@ interface SpaceXInfo {
   valuation: number;
   summary: string;
   id: string;
-};
+}
 
 interface Fairings {
   reused: boolean;
@@ -263,5 +263,45 @@ interface Payload {
   raan: null;
   arg_of_pericenter: null;
   mean_anomaly: null;
+  id: string;
+}
+
+interface LandingZone {
+  images: {
+    large: string[];
+  };
+  name: string;
+  full_name: string;
+  status: string;
+  type: string;
+  locality: string;
+  region: string;
+  latitude: number;
+  longitude: number;
+  landing_attempts: number;
+  landing_successes: number;
+  wikipedia: string;
+  details: string;
+  launches: string[];
+  id: string;
+}
+
+interface LaunchPad {
+  images: {
+    large: string[];
+  };
+  name: string;
+  full_name: string;
+  locality: string;
+  region: string;
+  latitude: number;
+  longitude: number;
+  launch_attempts: number;
+  launch_successes: number;
+  rockets: string[];
+  timezone: string;
+  launches: string[];
+  status: string;
+  details: string;
   id: string;
 }
