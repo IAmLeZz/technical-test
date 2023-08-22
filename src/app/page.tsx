@@ -8,10 +8,7 @@ import LaunchesChart from '@/components/LaunchesChart'
 import PayloadsChart from '@/components/PayloadsChart'
 import Landpads from '@/components/Landpads'
 import Launchpads from '@/components/Launchpads'
-import useLightbox from '@/components/useLightbox'
-import slides from '@/components/slides'
-
-
+import LandpadsChart from '@/components/LandpadsChart'
 
 
 export default function Home() {
@@ -27,17 +24,20 @@ export default function Home() {
       <main style={{ zIndex: '1' }}>
         <ParticlesBG></ParticlesBG>
         <h1 className='text-[40px] text-center font-bold company-text'>SPACEX APP</h1>
-        { /* <Company spaceXData={company}></Company>  */}
+        {/* <Company spaceXData={company}></Company> */}
         <h3 className='text-[30px] text-center font-bold'>Our rockets</h3>
-        <Rockets rockets={rockets} /> 
+        <Rockets rockets={rockets} />
         <Landpads landpadsData={landpads}></Landpads>
         <Launchpads></Launchpads>
         <History events={history}></History>
-        <div className='w-[100%] md:w-[45%] m-auto'>
+        <div className='w-[100%] md:w-[45%] m-auto my-5'>
           <LaunchesChart launches={launches} isSuccess={true}></LaunchesChart>
         </div>
-        <div className='w-[100%] md:w-[45%] h-auto m-auto'>
+        <div className='w-[100%] md:w-[45%] h-auto m-auto my-5'>
           <PayloadsChart payload={payloads}></PayloadsChart>
+        </div>
+        <div className='w-[100%] md:w-[45%] h-auto m-auto my-5'>
+          <LandpadsChart landpadsData={landpads}></LandpadsChart>
         </div>
       </main>
     )
