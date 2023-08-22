@@ -21,8 +21,15 @@ const PayloadsChart = ({ payload }: { payload: Payload[] }) => {
       {
         label: 'Types of payloads',
         data: Object.values(payloadCountByType),
-        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: ['rgba(82, 145, 125, 0.6)',
+        'rgba(190, 231, 146, 0.6)',
+        'rgba(58, 40, 145, 0.6)',
+        'rgba(232, 70, 90, 0.6)',
+        'rgba(168, 0, 194, 0.6)',
+        'rgba(0, 115, 215, 0.6)',
+        'rgba(192, 80, 55, 0.6)'
+      ],
+        borderColor: 'rgba(75, 192, 192, 1)',  
         borderWidth: 1,
       },
     ],
