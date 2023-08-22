@@ -2,10 +2,29 @@ import React, { useEffect, useRef, useState } from 'react'
 import useSpaceXData from '../hooks/useSpaceXData'
 import { replaceRocketIdsWithNames } from '@/services/rocketsNames'
 import { FaRocket } from 'react-icons/fa'
+import Image from 'next/image'
 
 export default function Launchpads() {
     const [launchpadsData, setLaunchpadsData] = useState<LaunchPad[]>([])
     const { data, loading, error } = useSpaceXData({ endpoint: 'v4/launchpads' })
+
+    // Declare a state variable for filter criteria
+    const [filter, setFilter] = useState({
+        status: '',
+        locality: '',
+        region: '',
+        rocket: '',
+    })
+
+    // Handle form submission and update filter state
+    const handleFilter = (event: any) => {
+        event.preventDefault()
+        const { name, value } = event.target
+        setFilter((prevFilter) => ({
+            ...prevFilter,
+            [name]: value,
+        }))
+    }
 
     // Update launchpads data when data from useSpaceXData hook changes
     useEffect(() => {
@@ -19,18 +38,129 @@ export default function Launchpads() {
     if (loading) return <div>Loading...</div>
     if (error) return <div>Error: {error}</div>
 
+    // Filter launchpads data based on filter state
+    const filteredLaunchpads = launchpadsData.filter((launchpad) => {
+        return (
+            (filter.status === '' || filter.status === launchpad.status) &&
+            (filter.locality === '' ||
+                filter.locality.toUpperCase() === launchpad.locality.toUpperCase()) &&
+            (filter.region === '' ||
+                filter.region.toUpperCase() === launchpad.region.toUpperCase()) &&
+            (filter.rocket === '' ||
+                launchpad.rockets.some((rocket) => rocket === filter.rocket))
+        )
+    })
+    const statuses = Array.from(
+        new Set(launchpadsData.map(launchpad => launchpad.status))
+    )
+
+    const localities = Array.from(
+        new Set(launchpadsData.map((launchpad) => launchpad.locality))
+    )
+    const regions = Array.from(
+        new Set(launchpadsData.map((launchpad) => launchpad.region))
+    )
+    const rockets = Array.from(
+        new Set(launchpadsData.flatMap((launchpad) => launchpad.rockets))
+    )
+
+    // Map values to options for select elements
+
+    const statusOptions = statuses.map((status) => ({
+        value: status,
+        label: status.charAt(0).toUpperCase() + status.slice(1),
+    }))
+
+    const localityOptions = localities.map((locality) => ({
+        value: locality,
+        label: locality,
+    }))
+    const regionOptions = regions.map((region) => ({
+        value: region,
+        label: region,
+    }))
+    const rocketOptions = rockets.map((rocket) => ({
+        value: rocket,
+        label: rocket,
+    }))
+
     return (
         <div className="bg-gray-900 text-white p-4">
             <h1 className="text-4xl font-bold mb-8">Launchpads</h1>
-            <div className="grid grid-cols-3 gap-4">
-                {launchpadsData.map((launchpad: LaunchPad) => (
+            <form onSubmit={handleFilter} className="mb-4">
+                <label htmlFor="status" className="text-gray-300 mr-2">Status:</label>
+                <select
+                    name="status"
+                    id="status"
+                    onChange={handleFilter}
+                    className="bg-gray-800 text-gray-300 border border-gray-600 rounded mr-4"
+                >
+                    <option value="">All</option>
+                    {statusOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
+                </select>
+                <label htmlFor="locality" className="text-gray-300 mr-2">
+                    Locality:
+                </label>
+                <select
+                    name="locality"
+                    id="locality"
+                    onChange={handleFilter}
+                    className="bg-gray-800 text-gray-300 border border-gray-600 rounded mr-4"
+                >
+                    <option value="">All</option>
+                    {localityOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
+                </select>
+                <label htmlFor="region" className="text-gray-300 mr-2">
+                    Region:
+                </label>
+                <select
+                    name="region"
+                    id="region"
+                    onChange={handleFilter}
+                    className="bg-gray-800 text-gray-300 border border-gray-600 rounded mr-4"
+                >
+                    <option value="">All</option>
+                    {regionOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
+                </select>
+                <label htmlFor="rocket" className="text-gray-300 mr-2">Rocket:</label>
+                <select
+                    name="rocket"
+                    id="rocket"
+                    onChange={handleFilter}
+                    className="bg-gray-800 text-gray-300 border border-gray-600 rounded mr-4"
+                >
+                    <option value="">All</option>
+                    {rocketOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
+                </select>
+            </form>
+            {/* Use filteredLaunchpads instead of launchpadsData */}
+            <div className="grid md:grid-cols-3 gap-4 grid-cols-1">
+                {filteredLaunchpads.map((launchpad: LaunchPad) => (
                     <div
                         key={launchpad.id}
                         className="bg-gray-800 rounded-lg shadow-lg overflow-hidden"
                     >
-                        <img
+                        <Image
                             src={launchpad.images.large[0]}
                             alt={launchpad.name}
+                            width={500}
+                            height={500}
                             className="w-full h-48 object-cover"
                         />
                         <div className="p-4">
@@ -76,7 +206,3 @@ export default function Launchpads() {
         </div>
     )
 }
-function scrollIntoView(arg0: string): string {
-    throw new Error('Function not implemented.')
-}
-
