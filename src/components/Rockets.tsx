@@ -4,6 +4,7 @@ import './Rockets.css'
 import useLightbox from './useLightbox';
 import slides from './slides';
 import generateSlides from './slides';
+import Image from 'next/image';
 
 const Rockets = ({ rockets }: { rockets: Rocket[] }) => {
   const { openLightbox, renderLightbox } = useLightbox();
@@ -11,7 +12,7 @@ const Rockets = ({ rockets }: { rockets: Rocket[] }) => {
   
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-[100%] md:w-[95%] m-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-[100%] md:w-[95%] m-auto my-5">
         {rockets.map((rocket) => (
           <div
             key={rocket.id}
@@ -44,10 +45,12 @@ const Rockets = ({ rockets }: { rockets: Rocket[] }) => {
               </p>
             </div>
             <a onClick={openLightbox}>
-              <img
+              <Image
                 src={rocket.flickr_images[0]}
                 className="rounded-lg w-full"
                 alt={rocket.name}
+                width={500}
+                height={500}
               />
             </a>
           </div>
