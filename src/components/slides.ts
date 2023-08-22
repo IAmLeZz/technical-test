@@ -1,13 +1,9 @@
-
-import { imageSize } from "image-size";
-
 const breakpoints = [4320, 2160, 1080, 640, 384, 256, 128];
-
 const generateSlides = (rockets: Rocket[]) => {
   const slides = rockets.flatMap((rocket) => {
     return rocket.flickr_images.map((src: string) => {
-      const width = 2880
-      const height = 1440
+      const width = 2880;
+      const height = 1440;
       return {
         src,
         width,
@@ -26,5 +22,4 @@ const generateSlides = (rockets: Rocket[]) => {
 
   return slides;
 };
-
 export default generateSlides;

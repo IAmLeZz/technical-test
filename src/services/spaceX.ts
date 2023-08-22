@@ -5,9 +5,7 @@ import axios from 'axios';
 export const spaceX = async (endpoint: string, params?: string) => {
     try {
         const url = `${BASE_URL}/${endpoint}`;
-        console.log(url);
         const response = await axios.get(url, {params});
-        console.log(params);
         return response.data;
     }
     catch (error) {
@@ -22,7 +20,7 @@ export const getRockets = async () => {
   
       // Fetch additional data for each rocket
       const rocketsWithImages = await Promise.all(
-        rocketsData.map(async (rocket: any) => {
+        rocketsData.map(async (rocket: Rocket) => {
           const imagesResponse = await axios.get(`${BASE_URL}/v4/rockets/${rocket.id}`);
           const imagesData = imagesResponse.data;
   
