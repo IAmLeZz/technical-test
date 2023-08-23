@@ -1,10 +1,23 @@
-import React from 'react';
+"use client"
+
+import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
+import useSpaceXData from '@/hooks/useSpaceXData';
 
 Chart.register(...registerables);
 
-export default function LaunchesChart({ launches, isSuccess }: { launches: Launch[], isSuccess: boolean }) {
+export default function LaunchesChart({ isSuccess }: { isSuccess: boolean }) {
+  const [launches, setLaunches] = useState<Launch[]>([]);
+  const { data: launchesData, error, loading } = useSpaceXData({ endpoint: 'v5/launches' })
+
+  useEffect(() => {
+    async function updateLaunchesData() {
+      setLaunches(launchesData);
+    }
+    updateLaunchesData();
+  }, [launchesData])
+
   const Launches = launches.filter((launch) => launch.success === isSuccess);
   const launchYears = Launches.map((launch) => launch.date_utc.slice(0, 4));
 
@@ -40,6 +53,9 @@ export default function LaunchesChart({ launches, isSuccess }: { launches: Launc
       },
     },
   };
+
+  if (loading) return <div>Loading...</div>
+  if (error) return <div>Error: {error}</div>
 
   return (
     <div>

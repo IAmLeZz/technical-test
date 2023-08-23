@@ -1,3 +1,5 @@
+"use client"
+
 import { useCallback } from "react";
 import type { Container, Engine } from "tsparticles-engine";
 import Particles from "react-tsparticles";
@@ -22,7 +24,7 @@ const ParticlesBG = () => {
             id="tsparticles"
             init={particlesInit}
             loaded={particlesLoaded}
-            style={{ zIndex: "-1", opacity: '0.1'}}
+            style={{ zIndex: "-1", opacity: '0.1' }}
             options={{
                 background: {
                     color: {

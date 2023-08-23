@@ -1,8 +1,21 @@
+"use client"
+import useSpaceXData from '@/hooks/useSpaceXData'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaWikipediaW } from 'react-icons/fa'
 
-export default function Landpads({ landpadsData }: { landpadsData: LandingZone[] }) {
+export default function Landpads() {
+  const [landpads, setLandpads] = useState<LandingZone[]>([])
+  const { data: landpadsData, loading, error } = useSpaceXData({ endpoint: 'v4/landpads' })
+
+  // Update launchpads data when data from useSpaceXData hook changes
+  useEffect(() => {
+    async function updateLaunchpadsData() {
+      setLandpads(landpads)
+    }
+    updateLaunchpadsData()
+  }, [landpadsData])
+
   // Declare a state variable for filter criteria
   const [filter, setFilter] = useState({
     status: '',
@@ -22,7 +35,7 @@ export default function Landpads({ landpadsData }: { landpadsData: LandingZone[]
   }
 
   // Filter landpads data based on filter state
-  const filteredLandpads = landpadsData.filter((landpad) => {
+  const filteredLandpads = landpads.filter((landpad) => {
     return (
       (filter.status === '' || filter.status === landpad.status) &&
       (filter.type === '' || filter.type === landpad.type) &&
@@ -32,17 +45,17 @@ export default function Landpads({ landpadsData }: { landpadsData: LandingZone[]
   })
 
   const statuses = Array.from(
-    new Set(landpadsData.map(landpad => landpad.status))
+    new Set(landpads.map(landpad => landpad.status))
   )
 
   const localities = Array.from(
-    new Set(landpadsData.map(landpad => landpad.locality))
+    new Set(landpads.map(landpad => landpad.locality))
   )
   const types = Array.from(
-    new Set(landpadsData.map(landpad => landpad.type))
+    new Set(landpads.map(landpad => landpad.type))
   )
   const regions = Array.from(
-    new Set(landpadsData.map(landpad => landpad.region))
+    new Set(landpads.map(landpad => landpad.region))
   )
 
   const statusOptions = statuses.map((status) => ({
@@ -61,6 +74,9 @@ export default function Landpads({ landpadsData }: { landpadsData: LandingZone[]
     value: type,
     label: type,
   }))
+
+  if (loading) return <div>Loading...</div>
+  if (error) return <div>Error: {error}</div>
 
   return (
     <div className="bg-gray-900 text-white p-4 my-5">

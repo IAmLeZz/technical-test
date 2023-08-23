@@ -1,7 +1,20 @@
-import React from 'react'
-import './History.css'
+"use client"
 
-const History = ({ events }: { events: SpaceXEvent[] }) => {
+import React, { useEffect, useState } from 'react'
+import './History.css'
+import useSpaceXData from '@/hooks/useSpaceXData';
+
+const History = () => {
+  const [events, setEvents] = useState<SpaceXEvent[]>([])
+  const { data: historyData, error, loading } = useSpaceXData({ endpoint: 'v4/history' })
+  useEffect(() => {
+    async function updateEventData() {
+      setEvents(historyData)
+    }
+    updateEventData()
+  }, [historyData])
+  if (loading) return <div>Loading...</div>
+  if (error) return <div>Error: {error}</div>
   return (
     <div className="py-10">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">

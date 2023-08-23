@@ -1,13 +1,25 @@
-import React from 'react'
+"use client"
+import React, { useEffect, useState } from 'react'
 import { Pie } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
+import useSpaceXData from '@/hooks/useSpaceXData';
 
 Chart.register(...registerables);
 
-export default function LandpadsChart({ landpadsData }: { landpadsData: LandingZone[] }) {
-    const landpads = landpadsData.map((landpad) => landpad.type);
+export default function LandpadsChart() {
+    const [landpads, setLandpads] = useState<LandingZone[]>([])
+    const { data: landpadsData, loading, error } = useSpaceXData({ endpoint: 'v4/landpads' })
+
+    useEffect(() => {
+        async function updateLandpadsData() {
+            setLandpads(landpadsData)
+        }
+        updateLandpadsData()
+    }, [landpadsData])
+
+    const landpadsTypes = landpads.map((landpad) => landpad.type);
     const landpadsByType: { [key: string]: number } = {};
-    landpads.forEach((landpad) => {
+    landpadsTypes.forEach((landpad) => {
         if (landpadsByType[landpad]) {
             landpadsByType[landpad]++;
         } else {
@@ -30,6 +42,9 @@ export default function LandpadsChart({ landpadsData }: { landpadsData: LandingZ
             },
         ],
     };
+
+    if (loading) return <div>Loading...</div>
+    if (error) return <div>Error: {error}</div>
 
     return (
         <div>

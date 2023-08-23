@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useEffect, useRef, useState } from 'react'
 import useSpaceXData from '../hooks/useSpaceXData'
 import { replaceRocketIdsWithNames } from '@/services/rocketsNames'
