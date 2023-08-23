@@ -1,16 +1,16 @@
 import { BASE_URL } from '@/utils/constants';
 import axios from 'axios';
 
-
-export const spaceX = async (endpoint: string, params?: string) => {
-    try {
-        const url = `${BASE_URL}/${endpoint}`;
-        const response = await axios.get(url, {params});
-        return response.data;
-    }
-    catch (error) {
-        console.log(error);
-    }
+export const spaceX = async (endpoint: string, params?: Params) => {
+  try {
+      const id = params?.id || '' ;
+      const url = `${BASE_URL}/${endpoint}/${id}`;
+      const response = await axios.get(url);
+      return response.data;
+  }
+  catch (error) {
+      console.log(error);
+  }
 }
 
 export const getRockets = async () => {
