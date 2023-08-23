@@ -1,25 +1,19 @@
-import React from 'react';
+"use client"
+
+import useSpaceXData from '@/hooks/useSpaceXData';
+import React, { useEffect, useState } from 'react';
 import { FaTwitter, FaFlickr, FaGlobe } from 'react-icons/fa';
 
-function SpaceXCard({ spaceXData }: {spaceXData: SpaceXInfo}) {
-  // Destructure the data object
-  const {
-    name,
-    founder,
-    founded,
-    employees,
-    vehicles,
-    launch_sites,
-    test_sites,
-    ceo,
-    cto,
-    coo,
-    cto_propulsion,
-    valuation,
-    summary,
-    headquarters: { address, city, state },
-    links: { website, flickr, twitter, elon_twitter },
-  } = spaceXData;
+function SpaceXCard() {
+  const [company, setCompany] = useState<SpaceXInfo>({});
+  const { data: companyData, error, loading } = useSpaceXData({ endpoint: 'v4/company' })
+  useEffect(() => {
+    async function updateCompanyData() {
+      setCompany(companyData)
+    }
+    updateCompanyData()
+  }, [companyData])
+
 
   // Format the valuation number
   const formatValuation = (num: number) => {
@@ -31,6 +25,9 @@ function SpaceXCard({ spaceXData }: {spaceXData: SpaceXInfo}) {
     });
   };
 
+  if (loading) return <div>Loading...</div>
+  if (error) return <div>Error: {error}</div>
+
   return (
     <div className="max-w-2xl mx-auto bg-gray-100 shadow-lg rounded-lg overflow-hidden py-4 mt-5">
       <div className="flex items-center justify-center px-6 py-4">
@@ -41,71 +38,71 @@ function SpaceXCard({ spaceXData }: {spaceXData: SpaceXInfo}) {
         />
       </div>
       <div className="px-6 py-4">
-        <p className="text-gray-600 text-sm">{summary}</p>
+        <p className="text-gray-600 text-sm">{company?.summary}</p>
         <div className="mt-4">
           <h2 className="text-xl font-semibold text-gray-800">Details</h2>
           <ul className="mt-2 text-gray-600 text-sm">
             <li>
-              <strong>Founder:</strong> {founder}
+              <strong>Founder:</strong> {company?.founder}
             </li>
             <li>
-              <strong>Founded:</strong> {founded}
+              <strong>Founded:</strong> {company?.founded}
             </li>
             <li>
-              <strong>Employees:</strong> {employees}
+              <strong>Employees:</strong> {company?.employees}
             </li>
             <li>
-              <strong>Vehicles:</strong> {vehicles}
+              <strong>Vehicles:</strong> {company?.vehicles}
             </li>
             <li>
-              <strong>Launch sites:</strong> {launch_sites}
+              <strong>Launch sites:</strong> {company?.launch_sites}
             </li>
             <li>
-              <strong>Test sites:</strong> {test_sites}
+              <strong>Test sites:</strong> {company?.test_sites}
             </li>
             <li>
-              <strong>CEO:</strong> {ceo}
+              <strong>CEO:</strong> {company?.ceo}
             </li>
             <li>
-              <strong>CTO:</strong> {cto}
+              <strong>CTO:</strong> {company?.cto}
             </li>
             <li>
-              <strong>COO:</strong> {coo}
+              <strong>COO:</strong> {company?.coo}
             </li>
             <li>
-              <strong>CTO of propulsion:</strong> {cto_propulsion}
+              <strong>CTO of propulsion:</strong> {company?.cto_propulsion}
             </li>
             <li>
-              <strong>Valuation:</strong> {formatValuation(valuation)}
+              <strong>Valuation:</strong> {formatValuation(company.valuation)}
             </li>
           </ul>
         </div>
         <div className="mt-4">
           <h2 className="text-xl font-semibold text-gray-800">Headquarters</h2>
           <p className="mt-2 text-gray-600 text-sm">
-            {address}, {city}, {state}
+            {company?.headquarters.address}, {company?.headquarters.city}, {company?.headquarters.state}
           </p>
         </div>
         <div className="mt-4">
           <h2 className="text-xl font-semibold text-gray-800">Links</h2>
           <div className="mt-2 flex items-center space-x-4 text-gray-600 text-sm">
             {/* Website link */}
-            <a href={website} target="_blank" rel="noreferrer">
+            <a href={company?.links.website} target="_blank" rel="noreferrer">
               <FaGlobe className="w-5 h-5" />
             </a>
 
             {/* Flickr link */}
-            <a href={flickr} target="_blank" rel="noreferrer">
+            <a href={company?.links.flickr} target="_blank" rel="noreferrer">
               <FaFlickr className="w-5 h-5" />
             </a>
 
             {/* Twitter link */}
-            <a href={twitter} target="_blank" rel="noreferrer">
+            <a href={company?.links.twitter} target="_blank" rel="noreferrer">
               <FaTwitter className="w-5 h-5" />
             </a>
 
             {/* Elon Musk's Twitter link */}
-            <a href={elon_twitter} target="_blank" rel="noreferrer">
+            <a href={company?.links.elon_twitter} target="_blank" rel="noreferrer">
               @elonmusk
             </a>
           </div>
