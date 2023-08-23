@@ -1,21 +1,18 @@
 "use client"
 import { spaceX } from '@/services/spaceX'
-import React, { useState, useCallback, useRef, useEffect } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 
-export default function useSpaceXData({ endpoint, params }: { endpoint: string, params?: string | undefined }) {
+export default function useSpaceXData({ endpoint, params }: { endpoint: string, params?: Params }) {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
-    const previousParams = useRef(params);
 
     const getSpaceXData = useCallback(
-        async ({ params }: { params: string | undefined }) => {
+        async ({ params }: { params: Params | undefined }) => {
             try {
                 setLoading(true);
                 setError(null);
-                previousParams.current = params;
-                const newData = await spaceX(endpoint);
-                console.log(newData)
+                const newData = await spaceX(endpoint, params);
                 setData(newData);
             }
             catch (error: unknown) {
