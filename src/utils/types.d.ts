@@ -1,3 +1,6 @@
+interface Params {
+  id?: string | undefined,
+}
 interface Height {
   meters: number;
   feet: number;
