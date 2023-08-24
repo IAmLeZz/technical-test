@@ -3,3 +3,9 @@
     -webkit-box-shadow: 2px 1px 15px 4px rgba(255, 255, 255, 0.75);
     -moz-box-shadow: 2px 1px 15px 4px rgba(255, 255, 255, 0.75);
 }
+
+.description {
+    max-height: 12em;
+    overflow-y: auto;
+    text-overflow: ellipsis;
+}
