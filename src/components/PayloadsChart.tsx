@@ -1,39 +1,39 @@
 "use client"
 
 import React, { useEffect, useState } from 'react';
-import { Bar, Pie, Doughnut } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
-import useSpaceXData from '@/hooks/useSpaceXData';
+import axios from 'axios';
+import { NODE_SERVER_URL } from '@/utils/constants';
 
 Chart.register(...registerables);
 const PayloadsChart = () => {
-  const [payload, setPayload] = useState<Payload[]>([]);
-  const { data: payloadsData, error, loading } = useSpaceXData({ endpoint: 'v4/payloads' })
+  const [payload, setPayload] = useState<PayloadLaunched[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function updatePayloadsData() {
-      setPayload(payloadsData);
+      try {
+        const response = await axios.get(`${NODE_SERVER_URL}/get-payload-data`);
+        setPayload(response.data);
+        setLoading(false);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err?.message);
+        }
+        setLoading(false);
+      }
     }
     updatePayloadsData();
-  }, [payloadsData])
-
-  const payloadType = payload.map((payload) => payload.type);
-  const payloadCountByType: { [payloadType: string]: number } = {};
-
-  payloadType.forEach((type) => {
-    if (payloadCountByType[type]) {
-      payloadCountByType[type]++;
-    } else {
-      payloadCountByType[type] = 1;
-    }
-  });
+  }, [])
 
   const chartData = {
-    labels: Object.keys(payloadCountByType),
+    labels: payload.map((payload) => payload.type_of_payload),
     datasets: [
       {
-        label: 'Types of payloads',
-        data: Object.values(payloadCountByType),
+        label: 'Total times launched',
+        data: payload.map((payload) => payload.times_launched),
         backgroundColor: ['rgba(82, 145, 125, 0.6)',
           'rgba(190, 231, 146, 0.6)',
           'rgba(58, 40, 145, 0.6)',

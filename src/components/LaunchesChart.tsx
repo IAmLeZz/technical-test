@@ -3,43 +3,41 @@
 import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
-import useSpaceXData from '@/hooks/useSpaceXData';
+import axios from 'axios';
+import { NODE_SERVER_URL } from '@/utils/constants';
 
 Chart.register(...registerables);
 
 export default function LaunchesChart({ isSuccess }: { isSuccess: boolean }) {
-  const [launches, setLaunches] = useState<Launch[]>([]);
-  const { data: launchesData, error, loading } = useSpaceXData({ endpoint: 'v5/launches' })
+  const [launches, setLaunches] = useState<LaunchYearlyResult[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function updateLaunchesData() {
-      setLaunches(launchesData);
+      try {
+        const response = await axios.get(`${NODE_SERVER_URL}/get-launch-data`);
+        setLaunches(response.data);
+        setLoading(false);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err?.message);
+        }
+        setLoading(false);
+      }
     }
     updateLaunchesData();
-  }, [launchesData])
-
-  const Launches = launches.filter((launch) => launch.success === isSuccess);
-  const launchYears = Launches.map((launch) => launch.date_utc.slice(0, 4));
-
-  // Count the successful launches for each year
-  const launchYearCounts: { [year: string]: number } = {};
-  launchYears.forEach((year) => {
-    if (launchYearCounts[year]) {
-      launchYearCounts[year]++;
-    } else {
-      launchYearCounts[year] = 1;
-    }
-  });
+  }, [])
 
   // Prepare data for the Bar chart
   const data = {
-    labels: Object.keys(launchYearCounts),
+    labels: launches.map((launch) => launch.year),
     datasets: [
       {
-        label: 'Successful Launches',
-        data: Object.values(launchYearCounts),
-        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-        borderColor: 'rgba(75, 192, 192, 1)',
+        label: isSuccess ? 'Successful Launches' : 'Failed Launches',
+        data: launches.map((launch) => isSuccess ? launch.successful_launches : launch.failed_launches),
+        backgroundColor: isSuccess ? 'rgba(75, 192, 192, 0.6)' : 'rgba(255, 99, 132, 0.6)',
+        borderColor: isSuccess ? 'rgba(75, 192, 192, 1)' : 'rgba(255,99,132,1)',
         borderWidth: 1,
       },
     ],
@@ -59,7 +57,7 @@ export default function LaunchesChart({ isSuccess }: { isSuccess: boolean }) {
 
   return (
     <div>
-      <h2>{isSuccess ? 'Successful launches by year' : 'failed launches by year'}</h2>
+      <h2>{isSuccess ? 'Successful launches by year' : 'Failed launches by year'}</h2>
       <Bar data={data} options={options} />
     </div>
   );
