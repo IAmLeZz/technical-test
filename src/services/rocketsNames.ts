@@ -1,10 +1,10 @@
-import { spaceX } from "./spaceX"
+import { spaceXApiCaller } from "./spaceX"
 
 export async function replaceRocketIdsWithNames(data: LaunchPad[]) {
     // Fetch rocket data for each rocket ID
     const rocketsData = await Promise.all(
       data.flatMap((item: LaunchPad) => item.rockets).map((rocketId: string) =>
-        spaceX(`v4/rockets/${rocketId}`)
+        spaceXApiCaller(`v4/rockets/${rocketId}`)
       )
     )
   

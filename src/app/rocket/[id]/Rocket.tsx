@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { spaceX } from '@/services/spaceX';
+import { spaceXApiCaller } from '@/services/spaceX';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { BsFillRocketTakeoffFill } from 'react-icons/bs';
 import { IoArrowBackCircle } from 'react-icons/io5';
@@ -14,7 +14,7 @@ export default function Rocket({ Id }: { Id: Params }) {
 
     useEffect(() => {
         const fetchRocket = async () => {
-            const rocketData = await spaceX('v4/rockets', Id);
+            const rocketData = await spaceXApiCaller('v4/rockets', Id);
             if (rocketData && Object.keys(rocketData).length > 0) {
                 setRocket(rocketData);
                 setLoading(false);

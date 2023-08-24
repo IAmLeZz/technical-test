@@ -1,6 +1,4 @@
-"use client"
-import { spaceX } from '@/services/spaceX'
-import React, { useState, useCallback, useEffect } from 'react'
+import { spaceXApiCaller } from '@/services/spaceX'
 
 export default function useSpaceXData({ endpoint, params }: { endpoint: string, params?: Params }) {
     const [data, setData] = useState([])
@@ -12,7 +10,7 @@ export default function useSpaceXData({ endpoint, params }: { endpoint: string, 
             try {
                 setLoading(true);
                 setError(null);
-                const newData = await spaceX(endpoint, params);
+                const newData = await spaceXApiCaller(endpoint, params);
                 setData(newData);
             }
             catch (error: unknown) {
