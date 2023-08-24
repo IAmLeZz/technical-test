@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import useSpaceXData from '../hooks/useSpaceXData'
 import { replaceRocketIdsWithNames } from '@/services/rocketsNames'
 import { FaRocket } from 'react-icons/fa'
@@ -19,7 +19,7 @@ export default function Launchpads() {
     })
 
     // Handle form submission and update filter state
-    const handleFilter = (event: any) => {
+    const handleFilter = (event: ChangeEvent<HTMLSelectElement>) => {
         event.preventDefault()
         const { name, value } = event.target
         setFilter((prevFilter) => ({
@@ -31,17 +31,21 @@ export default function Launchpads() {
     // Update launchpads data when data from useSpaceXData hook changes
     useEffect(() => {
         async function updateLaunchpadsData() {
-            const updatedData: LaunchPad[] = await replaceRocketIdsWithNames(data)
-            setLaunchpadsData(updatedData)
+            if (data) {
+                const updatedData: LaunchPad[] = await replaceRocketIdsWithNames(data)
+                setLaunchpadsData(updatedData)
+            } else {
+                error
+            }
         }
         updateLaunchpadsData()
-    }, [data])
+    }, [data, error])
 
     if (loading) return <div>Loading...</div>
     if (error) return <div>Error: {error}</div>
 
     // Filter launchpads data based on filter state
-    const filteredLaunchpads = launchpadsData.filter((launchpad) => {
+    const filteredLaunchpads = launchpadsData?.filter((launchpad) => {
         return (
             (filter.status === '' || filter.status === launchpad.status) &&
             (filter.locality === '' ||
@@ -89,7 +93,7 @@ export default function Launchpads() {
     return (
         <div className="bg-gray-900 text-white p-4">
             <h1 className="text-4xl font-bold mb-8">Launchpads</h1>
-            <form onSubmit={handleFilter} className="mb-4">
+            <form className="mb-4">
                 <label htmlFor="status" className="text-gray-300 mr-2">Status:</label>
                 <select
                     name="status"
