@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'SpaceX API',
-  description: 'SpaceX API consumer built with Next.js',
+  description: 'SpaceX API consumer built with Next.js. Backend is built with Node.js and Express',
 }
 
 export default function RootLayout({
