@@ -308,3 +308,30 @@ interface LaunchPad {
   details: string;
   id: string;
 }
+
+type ApiEndpoints = 'v4/rockets' | 'v5/launches' | 'v4/launchpads' | 'v4/landpads' | 'v4/history' | 'v4/company' | 'v4/payloads';
+
+type ApiResponse<T> = {
+  'v4/rockets': Rocket[];
+  'v5/launches': Launch[];
+  'v4/launchpads': LaunchPad[];
+  'v4/landpads': LandingZone[];
+  'v4/history': SpaceXEvent[];
+  'v4/company': SpaceXInfo;
+  'v4/payloads': Payload[];
+}[T];
+
+interface LaunchYearlyResult {
+  year: number;
+  successful_launches: number;
+  failed_launches: number;
+}
+
+interface LandpadTypesUsed {
+  asds: number;
+  rtls: number;
+}
+interface PayloadLaunched {
+  type_of_payload: string;
+  times_launched: number;
+}
