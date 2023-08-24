@@ -1,9 +1,10 @@
 import { spaceXApiCaller } from '@/services/spaceX'
+import { useState, useCallback, useEffect } from 'react'
 
-export default function useSpaceXData({ endpoint, params }: { endpoint: string, params?: Params }) {
-    const [data, setData] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState<string | null>(null)
+export default function useSpaceXData<T extends ApiEndpoints>({ endpoint, params }: { endpoint: T, params?: Params }) {
+    const [data, setData] = useState<ApiResponse<T> | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     const getSpaceXData = useCallback(
         async ({ params }: { params: Params | undefined }) => {
@@ -12,26 +13,22 @@ export default function useSpaceXData({ endpoint, params }: { endpoint: string, 
                 setError(null);
                 const newData = await spaceXApiCaller(endpoint, params);
                 setData(newData);
-            }
-            catch (error: unknown) {
+            } catch (error: unknown) {
                 if (error instanceof Error) {
                     setError(error.message);
                 }
-            }
-            finally {
+            } finally {
                 setLoading(false);
             }
-        }
-        ,
+        },
         [],
-    )
+    );
 
-    // Fetch data from SpaceX API when component mounts
     useEffect(() => {
         getSpaceXData({ params });
     }, [getSpaceXData, params]);
 
     return {
         data, getSpaceXData, loading, error
-    }
+    };
 }
