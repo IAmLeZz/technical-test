@@ -1,7 +1,7 @@
 "use client"
 import useSpaceXData from '@/hooks/useSpaceXData'
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, FormEvent, FormEventHandler, useEffect, useState } from 'react'
 import { FaWikipediaW } from 'react-icons/fa'
 
 export default function Landpads() {
@@ -11,10 +11,14 @@ export default function Landpads() {
   // Update launchpads data when data from useSpaceXData hook changes
   useEffect(() => {
     async function updateLaunchpadsData() {
-      setLandpads(landpads)
+      if (landpadsData) {
+        setLandpads(landpadsData)
+      } else {
+        error
+      }
     }
     updateLaunchpadsData()
-  }, [landpadsData])
+  }, [landpadsData, error])
 
   // Declare a state variable for filter criteria
   const [filter, setFilter] = useState({
@@ -25,7 +29,7 @@ export default function Landpads() {
   })
 
   // Handle form submission and update filter state
-  const handleFilter = (event: any) => {
+  const handleFilter = (event: ChangeEvent<HTMLSelectElement>) => {
     event.preventDefault()
     const { name, value } = event.target
     setFilter((prevFilter) => ({
@@ -81,8 +85,7 @@ export default function Landpads() {
   return (
     <div className="bg-gray-900 text-white p-4 my-5">
       <h1 className="text-4xl font-bold mb-8">Landpads</h1>
-      {/* Create a form element with input fields or select elements for filter criteria */}
-      <form onSubmit={handleFilter} className="mb-4">
+      <form className="mb-4">
         <label htmlFor="status" className="text-gray-300 mr-2">Status:</label>
         <select
           name="status"
