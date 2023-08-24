@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import axios from 'axios';
-import { NODE_SERVER_URL } from '@/utils/constants';
+import { NODE_SERVER_URL_API } from '@/utils/constants';
 
 Chart.register(...registerables);
 const PayloadsChart = () => {
@@ -15,7 +15,7 @@ const PayloadsChart = () => {
   useEffect(() => {
     async function updatePayloadsData() {
       try {
-        const response = await axios.get(`${NODE_SERVER_URL}/get-payload-data`);
+        const response = await axios.get(`${NODE_SERVER_URL_API}/get-payload-data`);
         setPayload(response.data);
         setLoading(false);
       } catch (err: unknown) {

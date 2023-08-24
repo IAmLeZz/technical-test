@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import axios from 'axios';
-import { NODE_SERVER_URL } from '@/utils/constants';
+import { NODE_SERVER_URL_API } from '@/utils/constants';
 
 Chart.register(...registerables);
 
@@ -16,7 +16,7 @@ export default function LaunchesChart({ isSuccess }: { isSuccess: boolean }) {
   useEffect(() => {
     async function updateLaunchesData() {
       try {
-        const response = await axios.get(`${NODE_SERVER_URL}/get-launch-data`);
+        const response = await axios.get(`${NODE_SERVER_URL_API}/get-launch-data`);
         setLaunches(response.data);
         setLoading(false);
       } catch (err: unknown) {
