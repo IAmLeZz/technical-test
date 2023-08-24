@@ -21,16 +21,25 @@
   src: url('../../public/fonts/SpaceX.ttf');
 }
 
-.company-text{
+.company-text {
   font-family: SpaceX, sans-serif;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+}
+
+@media (max-width: 768px) {
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  select {
+    margin-bottom: 10px;
+  }
 }
