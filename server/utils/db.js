@@ -11,5 +11,3 @@ exports.query = async (sql, values = []) => {
     const [rows] = await connection.query(sql, values);
     return rows;
 };
-
-exports.connection;
