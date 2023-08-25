@@ -1,5 +1,19 @@
-.rocket-box{
-    box-shadow: 2px 1px 18px 0px rgba(255,255,255,0.75);
-    -webkit-box-shadow: 2px 1px 18px 0px rgba(255,255,255,0.75);
-    -moz-box-shadow: 2px 1px 18px 0px rgba(255,255,255,0.75);
+.rocket-box {
+    box-shadow: 2px 1px 18px 0px rgba(134, 134, 134, 0.74);
+    -webkit-box-shadow: 2px 1px 18px 0px rgba(134, 134, 134, 0.74);
+    -moz-box-shadow: 2px 1px 18px 0px rgba(134, 134, 134, 0.74);
+}
+
+.slide-in-rockets {
+    animation: slideInAnimationRockets 2.5s ease forwards;
+}
+
+@keyframes slideInAnimationRockets {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }

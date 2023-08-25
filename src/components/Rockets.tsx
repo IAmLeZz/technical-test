@@ -26,8 +26,8 @@ const Rockets = () => {
 
   return (
     <>
-      <div className='bg-gray-900 text-white py-10 mt-5'>
-        <h3 className='text-4xl font-bold px-2'>Our rockets</h3>
+      <div className='bg-gray-900 text-white py-10 mt-5 opacity-0 slide-in-rockets'>
+        <h3 className='text-4xl font-bold px-2'>Our rockets, our pride</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-[100%] md:w-[95%] m-auto my-5">
           {rockets?.map((rocket) => (
             <div
