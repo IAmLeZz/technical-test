@@ -1,28 +1,46 @@
-<b>Prueba técnica Equipzilla </b>
+# Prueba técnica de Equipzilla
 
-# Iniciar Node.js (backend)
+</br>
 
 **Requisitos: [Node.js, NPM](https://nodejs.org/es) y un servidor con base de datos [MySQL](https://www.apachefriends.org/es/index.html)**
 
-Tenemos que correr el servidor backend en Node.js con los siguientes comandos en la terminal:
+## Iniciar Next.js (frontend)
 
-* Primero tenemos que movernos a la carpeta ```server```
+* Vamos a instalar las dependencias del frontend con el siguiente comando en la terminal
+
+```bash
+npm i 
+```
+
+* Una vez que se hayan instalado las dependencias
+
+```bash
+npm run dev
+```
+
+Hay algunos componentes que requieren de Node.js para funcionar, así que ahora tenemos que movernos al backend
+
+## Iniciar Node.js (backend)
+
+Vamos a abrir otra terminal en la carpeta del proyecto y dejaremos el servidor frontend activo.
+
+* Mover la posición de la terminal de comandos a la carpeta ```server```
 
 ```bash
 cd server
 ```
 
-* Ahora tenemos que instalar las dependencias
+* Instalar las dependencias
 
 ```bash
 npm i
 ```
 
-Asumiendo que ya tenemos un gestor de bases de datos MySQL en nuestro sistema con un servidor corriendo, ahora tenemos que buscar los datos del servidor de base de datos para completar las variables de entorno.</br>
+Asumiendo que ya tenemos un gestor de bases de datos MySQL en nuestro sistema con un servidor activo, ahora tenemos que buscar los datos del servidor de base de datos para completar las variables de entorno.</br>
 
-**Ejemplo de un servidor tipo MariaDB**
+**Ejemplo de un servidor tipo MariaDB
 
-```
+``` .env
 Database server
 Server: 127.0.0.1 via TCP/IP
 Server type: MariaDB
@@ -33,32 +51,37 @@ User: root@localhost
 Server charset: UTF-8 Unicode (utf8mb4)
 ```
 
-Ahora tenemos que abrir el archivo ```.env```, donde veremos lo siguientes campos a rellenar con los datos de nuestro servidor de base de datos
+Tenemos que abrir el archivo ```.env```, donde veremos lo siguientes campos a rellenar con los datos de nuestro servidor de base de datos.
 
-```
+``` .env
 DB_CONNECTION=
 DB_HOST=
 DB_PORT=
 DB_DATABASE=
 DB_USERNAME=
 DB_PASSWORD=
+
+FRONTEND_URL=
 ```
 
-* Ejemplo de ```.env``` funcional.
+* Ejemplo de ```.env``` funcional
 
-```
+``` .env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=mydatabase
 DB_USERNAME=root
 DB_PASSWORD=12345
+
+FRONTEND_URL=http://localhost:3000
 ```
 
 ## Tener en cuenta que
 
 * ```DB_PASSWORD``` **puede** ser opcional y estar completamente vacío </br>
-* ```DB_DATABASE``` **debe** ser rellenado con *"spacex_api_data"* ya que es el nombre de la base de datos que vamos a crear a continuación.
+* ```DB_DATABASE``` **debe** ser rellenado con *"spacex_api_data"* ya que es el nombre de la base de datos que vamos a crear a continuación
+* ```FRONTEND_URL``` dependerá de la URL de nuestro frontend, pero lo más probable es que sea <http://localhost:3000>
 
 ## Migraciones
 
@@ -75,35 +98,35 @@ npx sequelize-cli db:create
 npx sequelize-cli db:migrate    
 ```
 
-##
+## Pasos finales
 
-Ya teniendo las migraciones realizadas, iniciar el servidor
+* Ya teniendo las migraciones realizadas, iniciar el servidor
 
 ```bash
 npm start
 ```
 
-# Iniciar Next.js (frontend)
+* Ingresar a las siguientes direcciones para guardar la información de la API de SpaceX. **El puerto puede ser diferente a 4000**
 
-* Asumiendo que tu terminal estaba posicionada en ```server```, volver hacia ```technical-test```
-
-```bash
-cd ..
+``` url
+http://localhost:4000/api/store-landpad-type-data
 ```
 
-* Vamos a instalar las dependencias del frontend:
-
-```bash
-npm i 
+``` url
+http://localhost:4000/api/store-launch-data
 ```
 
-* Una vez que se hayan instalado las dependencias
-
-```bash
-npm run dev
+``` url
+http://localhost:4000/api/store-payload-data
 ```
+
+Cada dirección debería movernos al front-end y una notificación que dice "Data stored successfully / Datos almacenados correctamente" debería aparecer.
+
+</br>
+
+Si ese es el caso, entonces ya tenemos configurado y funcionando nuestro backend y por lo tanto, el frontend está completamente funcional.
 
 ## Direcciones
 
-Frontend URL por defecto [http://localhost:3000](http://localhost:3000) <br>
+Frontend URL por defecto [http://localhost:3000](http://localhost:3000) </br>
 Backend URL por defecto [http://localhost:4000](http://localhost:4000)
