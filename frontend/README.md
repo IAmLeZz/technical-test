@@ -6,6 +6,12 @@
 
 ## Iniciar Next.js (frontend)
 
+* Tenemos que movernos al frontend con el siguiente comando
+
+```bash
+cd frontend
+```
+
 * Vamos a instalar las dependencias del frontend con el siguiente comando en la terminal
 
 ```bash
@@ -128,5 +134,5 @@ Si ese es el caso, entonces ya tenemos configurado y funcionando nuestro backend
 
 ## Direcciones
 
-Frontend URL por defecto [http://localhost:3000](http://localhost:3000) </br>
+Frontend URL por defecto [http://localhost:3000](http://localhost:3000)</br>
 Backend URL por defecto [http://localhost:4000](http://localhost:4000)
