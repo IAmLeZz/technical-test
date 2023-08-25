@@ -6,7 +6,7 @@ import Particles from "react-tsparticles";
 //import { loadFull } from "tsparticles"; // if you are going to use `loadFull`, install the "tsparticles" package too.
 import { loadSlim } from "tsparticles-slim"; // if you are going to use `loadSlim`, install the "tsparticles-slim" package too.
 
-const ParticlesBG = () => {
+const ParticlesBackground = () => {
     const particlesInit = useCallback(async (engine: Engine) => {
         console.log(engine);
         // you can initialize the tsParticles instance (engine) here, adding custom shapes or presets
@@ -98,4 +98,4 @@ const ParticlesBG = () => {
     );
 };
 
-export default ParticlesBG;
+export default ParticlesBackground;
