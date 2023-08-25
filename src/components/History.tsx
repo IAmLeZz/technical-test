@@ -24,7 +24,7 @@ const History = () => {
     <div className="py-10">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
         <h1 className="text-3xl font-extrabold text-gray-200 mb-8">Events we are proud of</h1>
-        <ul className="grid md:grid-cols-4 md:grid-rows-2 md:gap-6 grid-cols-1 gap-6">
+        <ul className="grid md:grid-cols-2 lg:grid-cols-4 md:grid-rows-2 md:gap-6 grid-cols-1 gap-6">
           {events.map((event) => (
             <li key={event.id}>
               <div className="p-6 bg-white rounded-lg event-box">
