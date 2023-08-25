@@ -55,10 +55,15 @@ export default function LaunchesChart({ isSuccess }: { isSuccess: boolean }) {
   if (loading) return <div>Loading...</div>
   if (error) return <div>Error: {error}</div>
 
-  return (
-    <div>
-      <h2>{isSuccess ? 'Successful launches by year' : 'Failed launches by year'}</h2>
-      <Bar data={data} options={options} />
-    </div>
-  );
+  if (launches.length > 0) {
+    return (
+      <div>
+        <h2>{isSuccess ? 'Successful launches by year' : 'Failed launches by year'}</h2>
+        <Bar data={data} options={options} />
+      </div>
+    );
+  } else {
+    setLoading(true)
+  }
+
 }

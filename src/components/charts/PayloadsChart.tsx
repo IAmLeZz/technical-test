@@ -51,12 +51,17 @@ const PayloadsChart = () => {
   if (loading) return <div>Loading...</div>
   if (error) return <div>Error: {error}</div>
 
-  return (
-    <div>
-      <h2>Types of payloads launched by SpaceX</h2>
-      <Doughnut data={chartData} />
-    </div>
-  );
+  if (payload.length > 0) {
+    return (
+      <div>
+        <h2>Types of payloads launched by SpaceX</h2>
+        <Doughnut data={chartData} />
+      </div>
+    );
+  } else {
+    setLoading(true)
+  }
+
 };
 
 export default PayloadsChart;
