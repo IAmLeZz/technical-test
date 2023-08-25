@@ -1,12 +1,14 @@
 "use client"
+import useLandpadsFilter from '@/hooks/useLandpadsFilter'
 import useSpaceXData from '@/hooks/useSpaceXData'
 import Image from 'next/image'
-import React, { ChangeEvent, FormEvent, FormEventHandler, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaWikipediaW } from 'react-icons/fa'
 
 export default function Landpads() {
   const [landpads, setLandpads] = useState<LandingZone[]>([])
   const { data: landpadsData, loading, error } = useSpaceXData({ endpoint: 'v4/landpads' })
+  const { regionOptions, typesOptions, localityOptions, statusOptions, handleFilter, filteredLandpads } = useLandpadsFilter({ landpads })
 
   // Update launchpads data when data from useSpaceXData hook changes
   useEffect(() => {
@@ -20,64 +22,6 @@ export default function Landpads() {
     updateLaunchpadsData()
   }, [landpadsData, error])
 
-  // Declare a state variable for filter criteria
-  const [filter, setFilter] = useState({
-    status: '',
-    type: '',
-    locality: '',
-    region: '',
-  })
-
-  // Handle form submission and update filter state
-  const handleFilter = (event: ChangeEvent<HTMLSelectElement>) => {
-    event.preventDefault()
-    const { name, value } = event.target
-    setFilter((prevFilter) => ({
-      ...prevFilter,
-      [name]: value,
-    }))
-  }
-
-  // Filter landpads data based on filter state
-  const filteredLandpads = landpads.filter((landpad) => {
-    return (
-      (filter.status === '' || filter.status === landpad.status) &&
-      (filter.type === '' || filter.type === landpad.type) &&
-      (filter.locality === '' || filter.locality === landpad.locality) &&
-      (filter.region === '' || filter.region === landpad.region)
-    )
-  })
-
-  const statuses = Array.from(
-    new Set(landpads.map(landpad => landpad.status))
-  )
-
-  const localities = Array.from(
-    new Set(landpads.map(landpad => landpad.locality))
-  )
-  const types = Array.from(
-    new Set(landpads.map(landpad => landpad.type))
-  )
-  const regions = Array.from(
-    new Set(landpads.map(landpad => landpad.region))
-  )
-
-  const statusOptions = statuses.map((status) => ({
-    value: status,
-    label: status.charAt(0).toUpperCase() + status.slice(1),
-  }))
-  const localityOptions = localities.map((locality) => ({
-    value: locality,
-    label: locality,
-  }))
-  const regionOptions = regions.map((region) => ({
-    value: region,
-    label: region,
-  }))
-  const typesOptions = types.map((type) => ({
-    value: type,
-    label: type,
-  }))
 
   if (loading) return <div>Loading...</div>
   if (error) return <div>Error: {error}</div>
@@ -139,7 +83,7 @@ export default function Landpads() {
         </select>
       </form>
       {/* Use filteredLandpads instead of landpadsData */}
-      <div className="grid md:grid-cols-3 gap-4 grid-cols-1">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 grid-cols-1">
         {filteredLandpads.map((landpad) => (
           <div
             key={landpad.id}

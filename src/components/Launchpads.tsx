@@ -1,94 +1,31 @@
 "use client"
 
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useSpaceXData from '../hooks/useSpaceXData'
 import { replaceRocketIdsWithNames } from '@/services/rocketsNames'
 import { FaRocket } from 'react-icons/fa'
 import Image from 'next/image'
+import useLaunchpadsFilter from '@/hooks/useLaunchpadsFilter'
 
 export default function Launchpads() {
-    const [launchpadsData, setLaunchpadsData] = useState<LaunchPad[]>([])
-    const { data, loading, error } = useSpaceXData({ endpoint: 'v4/launchpads' })
+    const [launchpads, setLaunchpads] = useState<LaunchPad[]>([])
+    const { data: launchpadsData, loading, error } = useSpaceXData({ endpoint: 'v4/launchpads' })
+    const { statusOptions, rocketOptions, regionOptions, localityOptions, filteredLaunchpads, handleFilter } = useLaunchpadsFilter({ launchpads });
 
-    // Declare a state variable for filter criteria
-    const [filter, setFilter] = useState({
-        status: '',
-        locality: '',
-        region: '',
-        rocket: '',
-    })
-
-    // Handle form submission and update filter state
-    const handleFilter = (event: ChangeEvent<HTMLSelectElement>) => {
-        event.preventDefault()
-        const { name, value } = event.target
-        setFilter((prevFilter) => ({
-            ...prevFilter,
-            [name]: value,
-        }))
-    }
-
-    // Update launchpads data when data from useSpaceXData hook changes
     useEffect(() => {
         async function updateLaunchpadsData() {
-            if (data) {
-                const updatedData: LaunchPad[] = await replaceRocketIdsWithNames(data)
-                setLaunchpadsData(updatedData)
+            if (launchpadsData) {
+                const updatedData: LaunchPad[] = await replaceRocketIdsWithNames(launchpadsData)
+                setLaunchpads(updatedData)
             } else {
                 error
             }
         }
         updateLaunchpadsData()
-    }, [data, error])
+    }, [launchpadsData, error])
 
     if (loading) return <div>Loading...</div>
     if (error) return <div>Error: {error}</div>
-
-    // Filter launchpads data based on filter state
-    const filteredLaunchpads = launchpadsData?.filter((launchpad) => {
-        return (
-            (filter.status === '' || filter.status === launchpad.status) &&
-            (filter.locality === '' ||
-                filter.locality.toUpperCase() === launchpad.locality.toUpperCase()) &&
-            (filter.region === '' ||
-                filter.region.toUpperCase() === launchpad.region.toUpperCase()) &&
-            (filter.rocket === '' ||
-                launchpad.rockets.some((rocket) => rocket === filter.rocket))
-        )
-    })
-    const statuses = Array.from(
-        new Set(launchpadsData.map(launchpad => launchpad.status))
-    )
-
-    const localities = Array.from(
-        new Set(launchpadsData.map((launchpad) => launchpad.locality))
-    )
-    const regions = Array.from(
-        new Set(launchpadsData.map((launchpad) => launchpad.region))
-    )
-    const rockets = Array.from(
-        new Set(launchpadsData.flatMap((launchpad) => launchpad.rockets))
-    )
-
-    // Map values to options for select elements
-
-    const statusOptions = statuses.map((status) => ({
-        value: status,
-        label: status.charAt(0).toUpperCase() + status.slice(1),
-    }))
-
-    const localityOptions = localities.map((locality) => ({
-        value: locality,
-        label: locality,
-    }))
-    const regionOptions = regions.map((region) => ({
-        value: region,
-        label: region,
-    }))
-    const rocketOptions = rockets.map((rocket) => ({
-        value: rocket,
-        label: rocket,
-    }))
 
     return (
         <div className="bg-gray-900 text-white p-4">
@@ -156,7 +93,7 @@ export default function Launchpads() {
                 </select>
             </form>
             {/* Use filteredLaunchpads instead of launchpadsData */}
-            <div className="grid md:grid-cols-3 gap-4 grid-cols-1">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 grid-cols-1">
                 {filteredLaunchpads.map((launchpad: LaunchPad) => (
                     <div
                         key={launchpad.id}
