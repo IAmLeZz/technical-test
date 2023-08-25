@@ -6,13 +6,7 @@
 
 ## Iniciar Next.js (frontend)
 
-* Tenemos que movernos al frontend con el siguiente comando
-
-```bash
-cd frontend
-```
-
-* Vamos a instalar las dependencias del frontend con el siguiente comando en la terminal
+* Vamos a instalar las dependencias del frontend ```technical-test``` con el siguiente comando en la terminal
 
 ```bash
 npm i 
@@ -28,9 +22,9 @@ Hay algunos componentes que requieren de Node.js para funcionar, así que ahora 
 
 ## Iniciar Node.js (backend)
 
-Vamos a abrir otra terminal en la carpeta del proyecto del backend ```technical-test-server``` y dejaremos el servidor frontend activo.
+Vamos a abrir otra terminal en la carpeta del proyecto del backend ```technical-test-server``` pero dejaremos el servidor frontend activo.
 
-* Instalar las dependencias
+* Instalar las dependencias en ```technical-test-server```
 
 ```bash
 npm i
@@ -38,7 +32,7 @@ npm i
 
 Asumiendo que ya tenemos un gestor de bases de datos MySQL en nuestro sistema con un servidor activo, ahora tenemos que buscar los datos del servidor de base de datos para completar las variables de entorno.</br>
 
-**Ejemplo de un servidor tipo MariaDB
+** Ejemplo de un servidor tipo MariaDB
 
 ``` .env
 Database server

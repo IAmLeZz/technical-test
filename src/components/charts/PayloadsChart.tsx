@@ -17,8 +17,6 @@ const PayloadsChart = () => {
       try {
         const response = await axios.get(`${NODE_SERVER_URL}/get-payload-data`);
         setPayload(response.data);
-        console.log(process.env.NEXT_PUBLIC_NODE_SERVER_URL_API)
-        console.log(NODE_SERVER_URL)
         setLoading(false);
       } catch (err: unknown) {
         if (err instanceof Error) {
