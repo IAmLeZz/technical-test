@@ -1,7 +1,7 @@
 import React from 'react'
-import { PageProps } from '../../../../.next/types/app/layout';
 import Rocket from './Rocket';
 import ParticlesBG from '@/components/ParticlesBackground';
+import { PageProps } from '../../../../.next/types/app/rocket/[id]/page';
 
 export default function Page({ params }: PageProps) {
     return (
