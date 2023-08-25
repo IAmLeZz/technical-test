@@ -1,5 +1,6 @@
 const https = require('https');
 const { query } = require('../utils/db');
+const frontendUrl = process.env.FRONTEND_URL;
 
 const checkRowCount = async (table) => {
     const result = await query(`SELECT COUNT(*) as count FROM ${table}`);
@@ -7,7 +8,7 @@ const checkRowCount = async (table) => {
 };
 const sendErrorResponse = (res, errorMessage) => {
     console.error(errorMessage);
-    res.status(500).send('An error has occurred.');
+    res.redirect(`${frontendUrl}/?response=failed_store`);
 };
 
 exports.storeLaunchData = async (req, res) => {
@@ -49,7 +50,7 @@ exports.storeLaunchData = async (req, res) => {
                             );
                         });
                         res.status(200);
-                        res.send('Data stored successfully');
+                        res.redirect(`${frontendUrl}/?response=success_store`);
                     } catch (error) {
                         sendErrorResponse(res, error.message);
                     }
@@ -57,7 +58,7 @@ exports.storeLaunchData = async (req, res) => {
             });
         } else {
             res.status(200);
-            res.send('Data already stored');
+            res.redirect(`${frontendUrl}/?response=already_stored`);
         }
 
     } catch (error) {
@@ -86,7 +87,7 @@ exports.storeLandpadTypeData = async (req, res) => {
                             'INSERT INTO landpads (asds, rtls) VALUES (?, ?)',
                             [asdsLandpads, rtlsLandpads]
                         );
-                        res.send('Data stored successfully');
+                        res.redirect(`${frontendUrl}/?response=success_store`);
                     } catch (error) {
                         sendErrorResponse(res, error.message);
                     }
@@ -94,7 +95,7 @@ exports.storeLandpadTypeData = async (req, res) => {
             });
         } else {
             res.status(200)
-            res.send('Data already stored');
+            res.redirect(`${frontendUrl}/?response=already_stored`);
         }
     } catch (error) {
         sendErrorResponse(res, error.message);
@@ -126,7 +127,7 @@ exports.storePayloadData = async (req, res) => {
                                 [type, totalPayloads]
                             );
                         }
-                        res.send('Data stored successfully');
+                        res.redirect(`${frontendUrl}/?response=success_store`);
                     } catch (error) {
                         sendErrorResponse(res, error.message);
                     }
@@ -134,7 +135,7 @@ exports.storePayloadData = async (req, res) => {
             });
         } else {
             res.status(200);
-            res.send('Data already stored');
+            res.redirect(`${frontendUrl}/?response=already_stored`);
         }
     } catch (error) {
         sendErrorResponse(res, error.message);
