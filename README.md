@@ -28,13 +28,7 @@ Hay algunos componentes que requieren de Node.js para funcionar, así que ahora 
 
 ## Iniciar Node.js (backend)
 
-Vamos a abrir otra terminal en la carpeta del proyecto y dejaremos el servidor frontend activo.
-
-* Mover la posición de la terminal de comandos a la carpeta ```server```
-
-```bash
-cd server
-```
+Vamos a abrir otra terminal en la carpeta del proyecto del backend ```technical-test-server``` y dejaremos el servidor frontend activo.
 
 * Instalar las dependencias
 
