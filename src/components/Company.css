@@ -3,6 +3,23 @@
     src: url('../../public/fonts/SpaceX.ttf');
 }
 
-.company-text{
+.company-text {
     font-family: SpaceX, sans-serif;
+}
+
+.slide-in {
+    animation: slideInAnimation 1.5s ease forwards;
+}
+
+@keyframes slideInAnimation {
+    0% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    100% {
+        opacity: 1;
+        box-shadow: 2px 2px 15px 4px rgba(253, 253, 253, 0.75);
+        transform: translateX(0);
+    }
 }
