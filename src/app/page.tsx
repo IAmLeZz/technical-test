@@ -12,9 +12,10 @@ import ParticlesBackground from '@/components/ParticlesBackground'
 export default function Home() {
 
   return (
+
     <main style={{ zIndex: '1' }}>
-      <Notification />
       <ParticlesBackground />
+      <Notification />
       <Company />
       <Rockets />
       <Landpads />
@@ -30,5 +31,6 @@ export default function Home() {
         <LandpadsChart />
       </div>
     </main>
+
   )
 }

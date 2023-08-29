@@ -65,7 +65,7 @@ function SpaceXCard() {
   if (error) return <div>Error: {error}</div>
 
   return (
-    <div className="max-w-2xl mx-auto bg-gray-100 shadow-lg rounded-lg overflow-hidden py-4 mt-5 opacity-0 slide-in">
+    <div className="max-w-2xl mx-auto bg-gray-100 shadow-lg rounded-lg overflow-hidden py-5 mt-5 opacity-0 slide-in">
       <div className="flex items-center justify-center px-6 py-4">
         <h1 className='text-[40px] text-center font-bold company-text text-gray-950'>spaceX</h1>
       </div>
