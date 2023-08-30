@@ -34,7 +34,7 @@ export default function LaunchesChart({ isSuccess }: { isSuccess: boolean }) {
     labels: launches.map((launch) => launch.year),
     datasets: [
       {
-        label: isSuccess ? 'Successful Launches' : 'Failed Launches',
+        label: isSuccess ? 'Successful launches' : 'Failed launches',
         data: launches.map((launch) => isSuccess ? launch.successful_launches : launch.failed_launches),
         backgroundColor: isSuccess ? 'rgba(75, 192, 192, 0.6)' : 'rgba(255, 99, 132, 0.6)',
         borderColor: isSuccess ? 'rgba(75, 192, 192, 1)' : 'rgba(255,99,132,1)',
@@ -58,7 +58,7 @@ export default function LaunchesChart({ isSuccess }: { isSuccess: boolean }) {
   if (launches.length > 0) {
     return (
       <div>
-        <h2>{isSuccess ? 'Successful launches by year' : 'Failed launches by year'}</h2>
+        <h2 className='text-gray-100'>{isSuccess ? 'Successful launches by year' : 'Failed launches by year'}</h2>
         <Bar data={data} options={options} />
       </div>
     );

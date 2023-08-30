@@ -52,7 +52,7 @@ export default function LandpadsChart() {
 
         return (
             <div>
-                <h2>Types of landpads</h2>
+                <h2 className='text-gray-100'>Types of landpads</h2>
                 <Pie data={data} />
             </div>
         )
