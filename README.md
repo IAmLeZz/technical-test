@@ -1,4 +1,4 @@
-# Prueba técnica de Equipzilla
+# Como iniciar el proyecto
 
 </br>
 
